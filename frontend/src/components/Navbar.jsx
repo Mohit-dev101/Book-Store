@@ -17,10 +17,9 @@ export default function Navbar() {
     return location.pathname.startsWith(path) ? 'active' : '';
   }
 
-  // Don't show navbar on auth pages
-  if (['/login', '/signup'].includes(location.pathname)) {
-    return null;
-  }
+  // Don't show navbar on auth pages or admin pages (admin has its own sidebar)
+  if (['/login', '/signup'].includes(location.pathname)) return null;
+  if (location.pathname.startsWith('/admin')) return null;
 
   return (
     <nav className="navbar" id="main-navbar">
@@ -37,6 +36,14 @@ export default function Navbar() {
             </Link>
             <Link to="/signup" className="btn btn-primary btn-sm" id="nav-signup">
               Sign Up
+            </Link>
+          </div>
+        )}
+
+        {currentUser && currentUser.role === 'admin' && (
+          <div className="navbar-links">
+            <Link to="/admin/dashboard" className="btn btn-primary btn-sm" id="nav-admin-panel">
+              🛡️ Admin Panel
             </Link>
           </div>
         )}

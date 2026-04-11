@@ -12,9 +12,21 @@ import BuyerHome from './pages/buyer/BuyerHome';
 import ProductDetail from './pages/buyer/ProductDetail';
 import Cart from './pages/buyer/Cart';
 import Checkout from './pages/buyer/Checkout';
+import AdminLayout from './pages/admin/AdminLayout';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminUsers from './pages/admin/AdminUsers';
+import AdminProducts from './pages/admin/AdminProducts';
 
 export default function App() {
   const { currentUser } = useAuth();
+
+  // Helper for redirect based on role
+  function roleRedirect() {
+    if (!currentUser) return <Navigate to="/login" replace />;
+    if (currentUser.role === 'admin') return <Navigate to="/admin/dashboard" replace />;
+    if (currentUser.role === 'seller') return <Navigate to="/seller/dashboard" replace />;
+    return <Navigate to="/buyer/browse" replace />;
+  }
 
   return (
     <>
@@ -23,10 +35,10 @@ export default function App() {
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={
-          currentUser ? <Navigate to={currentUser.role === 'seller' ? '/seller/dashboard' : '/buyer/browse'} replace /> : <Signup />
+          currentUser ? roleRedirect() : <Signup />
         } />
         <Route path="/login" element={
-          currentUser ? <Navigate to={currentUser.role === 'seller' ? '/seller/dashboard' : '/buyer/browse'} replace /> : <Login />
+          currentUser ? roleRedirect() : <Login />
         } />
 
         {/* Seller Routes */}
@@ -53,6 +65,16 @@ export default function App() {
         <Route path="/buyer/checkout" element={
           <ProtectedRoute role="buyer"><Checkout /></ProtectedRoute>
         } />
+
+        {/* Admin Routes */}
+        <Route path="/admin" element={
+          <ProtectedRoute role="admin"><AdminLayout /></ProtectedRoute>
+        }>
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="users" element={<AdminUsers />} />
+          <Route path="products" element={<AdminProducts />} />
+        </Route>
 
         {/* Catch-all */}
         <Route path="*" element={<Navigate to="/" replace />} />

@@ -13,7 +13,7 @@ export default function Signup() {
   const { signup } = useAuth();
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     setError('');
 
@@ -28,7 +28,7 @@ export default function Signup() {
     }
 
     setLoading(true);
-    const result = signup(name.trim(), email.trim().toLowerCase(), password, role);
+    const result = await signup(name.trim(), email.trim().toLowerCase(), password, role);
     setLoading(false);
 
     if (result.success) {

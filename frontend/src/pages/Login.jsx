@@ -11,7 +11,7 @@ export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     setError('');
 
@@ -21,11 +21,13 @@ export default function Login() {
     }
 
     setLoading(true);
-    const result = login(email.trim().toLowerCase(), password);
+    const result = await login(email.trim().toLowerCase(), password);
     setLoading(false);
 
     if (result.success) {
-      if (result.user.role === 'seller') {
+      if (result.user.role === 'admin') {
+        navigate('/admin/dashboard');
+      } else if (result.user.role === 'seller') {
         navigate('/seller/dashboard');
       } else {
         navigate('/buyer/browse');

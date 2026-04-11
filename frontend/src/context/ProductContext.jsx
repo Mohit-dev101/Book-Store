@@ -102,7 +102,7 @@ export function ProductProvider({ children }) {
   }
 
   function getSellerProducts(sellerId) {
-    return products.filter(p => p.sellerId === sellerId);
+    return products.filter(p => String(p.sellerId) === String(sellerId));
   }
 
   function getProductById(id) {
