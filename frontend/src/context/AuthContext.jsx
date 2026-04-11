@@ -13,7 +13,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const token = localStorage.getItem('bookmart_token');
     if (token) {
-      fetch('/api/auth/me', {
+      fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(res => res.json())
@@ -33,7 +33,7 @@ export function AuthProvider({ children }) {
 
   async function signup(name, email, password, role) {
     try {
-      const res = await fetch('/api/auth/signup', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password, role })
@@ -53,7 +53,7 @@ export function AuthProvider({ children }) {
 
   async function login(email, password) {
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })

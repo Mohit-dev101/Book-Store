@@ -13,7 +13,7 @@ export function CartProvider({ children }) {
 
   useEffect(() => {
     if (currentUser && currentUser.token) {
-      fetch('/api/cart', {
+      fetch(`${import.meta.env.VITE_API_URL}/api/cart`, {
         headers: { 'Authorization': `Bearer ${currentUser.token}` }
       })
       .then(res => res.json())
@@ -34,7 +34,7 @@ export function CartProvider({ children }) {
     if (!currentUser || !currentUser.token) return;
     try {
       // product.id or product._id must be sent as productId
-      const res = await fetch('/api/cart', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/cart`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export function CartProvider({ children }) {
       });
       if (res.ok) {
         // Optimistically update or re-fetch cart. It's easiest to re-fetch nicely
-        const updatedReq = await fetch('/api/cart', {
+        const updatedReq = await fetch(`${import.meta.env.VITE_API_URL}/api/cart`, {
           headers: { 'Authorization': `Bearer ${currentUser.token}` }
         });
         const updatedData = await updatedReq.json();
@@ -58,7 +58,7 @@ export function CartProvider({ children }) {
   async function removeFromCart(productId) {
     if (!currentUser || !currentUser.token) return;
     try {
-      const res = await fetch(`/api/cart/${productId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/cart/${productId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${currentUser.token}`
@@ -80,7 +80,7 @@ export function CartProvider({ children }) {
     }
     
     try {
-      const res = await fetch(`/api/cart/${productId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/cart/${productId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ export function CartProvider({ children }) {
       });
       if (res.ok) {
         // Re-fetch to ensure mapped state
-        const updatedReq = await fetch('/api/cart', {
+        const updatedReq = await fetch(`${import.meta.env.VITE_API_URL}/api/cart`, {
           headers: { 'Authorization': `Bearer ${currentUser.token}` }
         });
         const updatedData = await updatedReq.json();

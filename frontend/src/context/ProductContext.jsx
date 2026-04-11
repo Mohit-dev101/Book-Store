@@ -31,7 +31,7 @@ export function ProductProvider({ children }) {
   
   const fetchProducts = async () => {
     try {
-      const res = await fetch('/api/products');
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products`);
       const data = await res.json();
       // map _id back to id for frontend compatibility
       const mapped = data.map(p => ({ ...p, id: p._id }));
@@ -48,7 +48,7 @@ export function ProductProvider({ children }) {
   async function addProduct(productData) {
     if (!currentUser || !currentUser.token) return;
     try {
-      const res = await fetch('/api/products', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export function ProductProvider({ children }) {
   async function updateProduct(id, updates) {
     if (!currentUser || !currentUser.token) return;
     try {
-      const res = await fetch(`/api/products/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ export function ProductProvider({ children }) {
   async function deleteProduct(id) {
     if (!currentUser || !currentUser.token) return;
     try {
-      const res = await fetch(`/api/products/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${currentUser.token}`
