@@ -7,11 +7,20 @@ export default function Checkout() {
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [orderId, setOrderId] = useState('');
 
+  const [formData, setFormData] = useState({ name: '', address: '', phone: '' });
+  const [error, setError] = useState('');
+
   const subtotal = getCartTotal();
   const shipping = subtotal > 500 ? 0 : 49;
   const total = subtotal + shipping;
 
   function handlePlaceOrder() {
+    if (!formData.name.trim() || !formData.address.trim() || !formData.phone.trim()) {
+      setError('Please fill in all delivery information fields to place the order.');
+      return;
+    }
+    setError('');
+
     const newOrderId = 'BM-' + Date.now().toString(36).toUpperCase();
     setOrderId(newOrderId);
     setOrderPlaced(true);
@@ -81,17 +90,43 @@ export default function Checkout() {
 
           <div className="card">
             <h3 style={{ marginBottom: '20px' }}>📍 Delivery Information</h3>
+            {error && (
+              <div className="alert alert-error" style={{ marginBottom: '16px', color: 'red' }}>
+                ⚠️ {error}
+              </div>
+            )}
             <div className="form-group">
               <label className="form-label">Full Name</label>
-              <input type="text" className="form-input" placeholder="Enter your full name" id="checkout-name" />
+              <input 
+                type="text" 
+                className="form-input" 
+                placeholder="Enter your full name" 
+                id="checkout-name" 
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              />
             </div>
             <div className="form-group">
               <label className="form-label">Address</label>
-              <textarea className="form-textarea" placeholder="Enter your delivery address" id="checkout-address" style={{ minHeight: '80px' }} />
+              <textarea 
+                className="form-textarea" 
+                placeholder="Enter your delivery address" 
+                id="checkout-address" 
+                style={{ minHeight: '80px' }} 
+                value={formData.address}
+                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+              />
             </div>
             <div className="form-group">
               <label className="form-label">Phone Number</label>
-              <input type="tel" className="form-input" placeholder="Enter your phone number" id="checkout-phone" />
+              <input 
+                type="tel" 
+                className="form-input" 
+                placeholder="Enter your phone number" 
+                id="checkout-phone" 
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              />
             </div>
           </div>
         </div>

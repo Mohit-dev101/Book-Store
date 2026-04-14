@@ -107,11 +107,13 @@ export default function Home() {
             { icon: '🎨', name: 'Arts', count: '600+ books' },
             { icon: '🏛️', name: 'History', count: '800+ books' },
           ].map((cat) => (
-            <div className="card category-card" key={cat.name}>
-              <div className="cat-icon">{cat.icon}</div>
-              <div className="cat-name">{cat.name}</div>
-              <div className="cat-count">{cat.count}</div>
-            </div>
+            <Link to={`/buyer/browse?category=${encodeURIComponent(cat.name)}`} key={cat.name} style={{ textDecoration: 'none' }}>
+              <div className="card category-card">
+                <div className="cat-icon">{cat.icon}</div>
+                <div className="cat-name">{cat.name}</div>
+                <div className="cat-count">{cat.count}</div>
+              </div>
+            </Link>
           ))}
         </div>
       </section>

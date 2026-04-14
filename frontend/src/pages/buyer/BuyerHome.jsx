@@ -1,13 +1,17 @@
 import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useProducts, getCategoryIcon, CATEGORIES } from '../../context/ProductContext';
 import { useCart } from '../../context/CartContext';
 
 export default function BuyerHome() {
   const { products } = useProducts();
   const { addToCart } = useCart();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const initialCategory = searchParams.get('category') || 'All';
+  
   const [search, setSearch] = useState('');
-  const [category, setCategory] = useState('All');
+  const [category, setCategory] = useState(initialCategory);
   const [sortBy, setSortBy] = useState('newest');
   const [addedId, setAddedId] = useState(null);
 
