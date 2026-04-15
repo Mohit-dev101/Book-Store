@@ -18,7 +18,7 @@ import adminRoutes from './routes/admin.js';
  
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'https://book-store-5-hps6.onrender.com',
+  origin: process.env.FRONTEND_URL || 'https://book-store-1-p9x9.onrender.com',
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
