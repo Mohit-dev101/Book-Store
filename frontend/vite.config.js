@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         '/api': {
-          target: env.VITE_API_URL || 'https://book-store-5-hps6.onrender.com',
+          target: env.VITE_API_URL || 'https://book-store-qxr7.onrender.com',
           changeOrigin: true
         }
       }
