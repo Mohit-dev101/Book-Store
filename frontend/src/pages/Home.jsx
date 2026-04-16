@@ -9,6 +9,9 @@ export default function Home() {
     if (currentUser.role === 'seller') {
       navigate('/seller/dashboard', { replace: true });
       return null;
+    } else if (currentUser.role === 'admin') {
+      navigate('/admin/dashboard', { replace: true });
+      return null;
     } else {
       navigate('/buyer/browse', { replace: true });
       return null;

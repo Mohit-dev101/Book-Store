@@ -17,7 +17,7 @@ import productRoutes from './routes/products.js';
 import cartRoutes from './routes/cart.js';
 import adminRoutes from './routes/admin.js';
 
- 
+
 
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'https://book-store-1-p9x9.onrender.com',
@@ -45,7 +45,7 @@ mongoose.connect(MONGO_URI)
     try {
       const adminEmail = 'mohitkumart2x@gmail.com';
       const existingAdmin = await User.findOne({ email: adminEmail });
-      
+
       if (!existingAdmin) {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash('admin123', salt);
