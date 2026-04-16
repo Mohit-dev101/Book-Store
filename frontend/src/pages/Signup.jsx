@@ -34,8 +34,6 @@ export default function Signup() {
     if (result.success) {
       if (role === 'seller') {
         navigate('/seller/dashboard');
-      } else if (role === 'admin') {
-        navigate('/admin/dashboard');
       } else {
         navigate('/buyer/browse');
       }
@@ -77,15 +75,6 @@ export default function Signup() {
             <div className="role-name">Seller</div>
             <div className="role-desc">List & sell books</div>
           </div>
-          <div
-            className={`role-option ${role === 'admin' ? 'active' : ''}`}
-            onClick={() => setRole('admin')}
-            id="role-admin"
-          >
-            <div className="role-icon">🛡️</div>
-            <div className="role-name">Admin</div>
-            <div className="role-desc">Manage platform</div>
-          </div>
         </div>
 
         <form onSubmit={handleSubmit} id="signup-form">
@@ -123,7 +112,7 @@ export default function Signup() {
             />
           </div>
           <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={loading} id="signup-submit">
-            {loading ? 'Creating Account...' : `Sign Up as ${role.charAt(0).toUpperCase() + role.slice(1)}`}
+            {loading ? 'Creating Account...' : `Sign Up as ${role === 'seller' ? 'Seller' : 'Buyer'}`}
           </button>
         </form>
 
